@@ -4,7 +4,7 @@ const sendBtn = document.getElementById('sendBtn'),
     subject = document.getElementById('subject'),
     message = document.getElementById('message'),
     resetBtn = document.getElementById('resetBtn'),
-    sendEmailForm = document.getElementById('.email-form');
+    sendEmailForm = document.getElementById('email-form');
 
 
 // Event Listeners
@@ -21,6 +21,7 @@ function eventListeners() {
     message.addEventListener('blur', validateField);
 
     // Send and Reset Buttons
+    sendEmailForm.addEventListener('submit', sendEmail);
     resetBtn.addEventListener('click', resetForm);
 }
 
@@ -33,8 +34,38 @@ function appInit() {
 
 }
 
+function sendEmail(e) {
+    e.preventDefault();
+
+    // show spinner
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'block';
+
+    // show image
+    const sendEmailImg = document.createElement('img');
+    sendEmailImg.src = 'img/mail.gif';
+    sendEmailImg.style.display = 'block';
+
+    // Hide Spinner then show the send Email
+    setTimeout(function() {
+        // Hide the spinner
+        spinner.style.display = 'none'; 
+
+        // show the image
+        document.querySelector('#loaders').appendChild(sendEmailImg);
+
+        //afer 5 seconds
+        setTimeout(function() {
+        sendEmailImg.reset();
+        sendEmailImg.remove();
+        }, 5000);
+    }, 3000 );
+}
+
 // Validate the fields
 function validateField() {
+    // console.log('From Validate Field');
+
     let errors;
 
     //Validate the lenth of the field
@@ -58,7 +89,7 @@ function validateField() {
     }
 }
 
-// Validate the lenth of the fields
+// Validate the length of the fields
 function validateLength(field) {
     if(field.value.length > 0) {
         field.style.borderBottomColor = 'green';
@@ -73,7 +104,7 @@ function validateLength(field) {
 function validateEmail(field) {
     let emailText = field.value;
     // checks for @ sign
-    if(emailTextindexOf('@' && '.') !== -1) {
+    if(emailText.indexOf('@') !== -1) {
         field.style.borderBottomColor = 'green';
         field.classList.remove('error');
     } else {
