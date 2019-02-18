@@ -58,6 +58,9 @@ function sendEmail(e) {
         setTimeout(function() {
         sendEmailImg.reset();
         sendEmailImg.remove();
+            setTimeout(function() {
+                sendEmailForm.reset();
+            }, 3000);
         }, 5000);
     }, 3000 );
 }
